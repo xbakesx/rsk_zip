@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "18.1.0"
+
+    defaultConfig {
+        minSdkVersion 3
+        targetSdkVersion 18
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file('/Users/alex/.android/debug.keystore')
+        }
+        release
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+        }
+        debug
+    }
+}

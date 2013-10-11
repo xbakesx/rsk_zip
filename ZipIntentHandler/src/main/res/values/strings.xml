@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RSK Zip</string>
+    <string name="publisher">\u00A9 RobotSideKick</string>
+    <string name="error_default">Sorry, the zip file could not be opened.</string>
+    <string name="error_file_not_found">There was a problem with the file.</string>
+    <string name="error_unknown_file_type">There are no applications to open this file.</string>
+    <string name="directory_up">Back (%s)</string>
+</resources>

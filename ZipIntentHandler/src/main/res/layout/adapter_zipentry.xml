@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android=
+        "http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="1dip"
+    android:paddingBottom="1dip"
+    android:paddingStart="@dimen/adapter_item_default_padding"
+    android:paddingEnd="@dimen/adapter_item_default_padding">
+
+    <ImageView android:id="@android:id/icon"
+        android:layout_width="16dip"
+        android:layout_height="16dip"
+        android:layout_gravity="center"
+        />
+
+    <TwoLineListItem
+        android:id="@+id/zipentry_twolinelistitem"
+        android:layout_width="match_parent"
+        android:layout_height="64dip"
+        android:paddingTop="2dip"
+        android:paddingBottom="2dip"
+        android:paddingStart="@dimen/adapter_item_default_padding"
+        android:mode="twoLine"
+        >
+
+        <TextView android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
+            android:textAppearance=
+                "?android:attr/textAppearanceMedium"
+            />
+
+        <TextView android:id="@android:id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@android:id/text1"
+            android:layout_alignStart="@android:id/text1"
+            android:textAppearance=
+                "?android:attr/textAppearanceSmall"
+            />
+
+    </TwoLineListItem>
+</LinearLayout>

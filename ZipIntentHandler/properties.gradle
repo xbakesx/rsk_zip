@@ -1,0 +1,4 @@
+android.signingConfigs.release.storeFile=/Users/alex/Documents/RobotSideKick/robotsidekick.keystore
+android.signingConfigs.release.storePassword=R0ll0ut5
+android.signingConfigs.release.keyAlias=sidekick
+android.signingConfigs.release.keyPassword=R0ll0ut5
