@@ -12,6 +12,10 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    compile 'com.android.support:support-v4:13.0.+'
+}
+
 android {
     compileSdkVersion 18
     buildToolsVersion "18.1.0"
@@ -33,4 +37,11 @@ android {
         }
         debug
     }
+}
+
+if(project.hasProperty('storeFile')) {
+    android.signingConfigs.release.storeFile = file(storeFile)
+    android.signingConfigs.release.storePassword = storePassword
+    android.signingConfigs.release.keyAlias = keyAlias
+    android.signingConfigs.release.keyPassword = keyPassword
 }

@@ -3,12 +3,14 @@ package com.robotsidekick.intents.zip.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +41,6 @@ import java.util.zip.ZipInputStream;
 public class ZipIntentActivity extends Activity {
 
     public static final String TAG = ZipIntentActivity.class.getSimpleName();
-    public static final String CACHE_DIRECTORY = "zip_cache";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,8 +149,8 @@ public class ZipIntentActivity extends Activity {
 
                         File file = null;
                         try {
-                            file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), CACHE_DIRECTORY);
-                            file.mkdirs();
+
+                            file = getApplicationContext().getCacheDir(); // new File(Environment.getDownloadCacheDirectory(), CACHE_DIRECTORY);
                             file = new File(file, item.getName());
                             FileOutputStream fos = new FileOutputStream(file);
                             fos.write(baos.toByteArray(), 0, baos.size());
@@ -160,7 +161,13 @@ public class ZipIntentActivity extends Activity {
 
                         if (file != null) {
                             Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.fromFile(file), item.getType().getMimeType());
+                            Context context = getApplicationContext();
+                            Uri fileUri = FileProvider.getUriForFile(context, getString(R.string.authorities_cache), file);
+//                            context.grantUriPermission(getPackageName(), fileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                            intent.setDataAndType(fileUri, item.getType().getMimeType());
+                            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                            Log.e(TAG, "Intent: " + intent.toUri(0));
 
                             try {
                                 startActivity(intent);
@@ -169,9 +176,16 @@ public class ZipIntentActivity extends Activity {
                             }
                         }
                     }
-
                 }
             });
+            View.OnClickListener rateAppListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getApplicationContext().getPackageName())));
+                }
+            };
+            dialog.findViewById(R.id.company_name_textview).setOnClickListener(rateAppListener);
+            dialog.findViewById(R.id.app_name_textview).setOnClickListener(rateAppListener);
             dialog.show();
 
             task = new AsyncTask<ZipInputStream, ZipEntryBase, Void>() {
@@ -208,10 +222,8 @@ public class ZipIntentActivity extends Activity {
                                     }
                                     if (parent == null) {
                                         adapter.addFile(item);
-                                        Log.e(TAG, "Adding to ROOT: " + item.getName());
                                     } else {
                                         parent.addFile(item);
-                                        Log.e(TAG, "Adding to " + parent.getName() + ": " + item.getName());
                                     }
                                 } else {
                                     Log.i(TAG, "Ignoring file: " + ze.getName());

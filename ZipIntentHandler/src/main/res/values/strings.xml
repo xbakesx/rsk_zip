@@ -6,4 +6,6 @@
     <string name="error_file_not_found">There was a problem with the file.</string>
     <string name="error_unknown_file_type">There are no applications to open this file.</string>
     <string name="directory_up">Back (%s)</string>
+
+    <string name="authorities_cache">com.robotsidekick.rskzip.fileprovider</string>
 </resources>
